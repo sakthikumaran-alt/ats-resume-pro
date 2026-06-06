@@ -1,4 +1,7 @@
 "use client";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 import { FileText, Plus, TrendingUp, Target } from "lucide-react";
 import Link from "next/link";
@@ -8,7 +11,20 @@ export default function Dashboard() {
     { id: 1, title: "Software Engineer Resume", ats_score: 85, updated_at: "2024-06-01" },
     { id: 2, title: "Frontend Developer Resume", ats_score: 92, updated_at: "2024-06-02" },
   ];
+const [user, setUser] = useState(null);
+const router = useRouter();
 
+useEffect(() => {
+  const getUser = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      router.push("/login");
+    } else {
+      setUser(user);
+    }
+  };
+  getUser();
+}, []);
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-6 py-8">

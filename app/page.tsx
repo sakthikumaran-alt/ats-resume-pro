@@ -27,7 +27,7 @@ export default function Home() {
           Join 50,000+ job seekers who landed interviews at top companies
         </p>
         <Link
-          href="/dashboard"
+          href="/signup"
           className="inline-flex items-center bg-purple-600 px-8 py-3 rounded-lg text-white font-semibold hover:bg-purple-700 transition"
         >
           Start Building Free <ArrowRight className="ml-2 w-5 h-5" />

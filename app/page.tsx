@@ -1,20 +1,42 @@
 "use client";
 
-import { ArrowRight, Sparkles, FileText, Zap, Shield } from "lucide-react";
+import { ArrowRight, Sparkles, FileText, Zap } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Navigation */}
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
         <div className="text-white text-2xl font-bold">🚀 ATS Resume Pro</div>
-        <Link
-          href="/dashboard"
-          className="bg-purple-600 px-4 py-2 rounded-lg text-white hover:bg-purple-700 transition"
-        >
-          Get Started Free
-        </Link>
+        <div className="flex gap-4">
+          {user ? (
+            <Link
+              href="/dashboard"
+              className="bg-purple-600 px-4 py-2 rounded-lg text-white hover:bg-purple-700 transition"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-white px-4 py-2 rounded-lg hover:bg-white/10 transition"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className="bg-purple-600 px-4 py-2 rounded-lg text-white hover:bg-purple-700 transition"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -26,12 +48,21 @@ export default function Home() {
         <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
           Join 50,000+ job seekers who landed interviews at top companies
         </p>
-        <Link
-          href="/signup"
-          className="inline-flex items-center bg-purple-600 px-8 py-3 rounded-lg text-white font-semibold hover:bg-purple-700 transition"
-        >
-          Start Building Free <ArrowRight className="ml-2 w-5 h-5" />
-        </Link>
+        {user ? (
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center bg-purple-600 px-8 py-3 rounded-lg text-white font-semibold hover:bg-purple-700 transition"
+          >
+            Go to Dashboard <ArrowRight className="ml-2 w-5 h-5" />
+          </Link>
+        ) : (
+          <Link
+            href="/signup"
+            className="inline-flex items-center bg-purple-600 px-8 py-3 rounded-lg text-white font-semibold hover:bg-purple-700 transition"
+          >
+            Start Building Free <ArrowRight className="ml-2 w-5 h-5" />
+          </Link>
+        )}
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-8 mt-20">

@@ -7,10 +7,18 @@ import Link from "next/link";
 import { saveResume, getUserResumes, deleteResume } from "@/lib/resumeService";
 import { useAuth } from "@/context/AuthContext";
 
+interface Resume {
+  id: string;
+  title: string;
+  ats_score: number;
+  updated_at: string;
+  content: any;
+}
+
 export default function Dashboard() {
   const { signOut } = useAuth();
-  const [user, setUser] = useState(null);
-  const [resumes, setResumes] = useState([]);
+  const [user, setUser] = useState<any>(null);
+  const [resumes, setResumes] = useState<Resume[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ total: 0, avgScore: 0 });
   const router = useRouter();
@@ -35,7 +43,7 @@ export default function Dashboard() {
       
       const total = data.length;
       const avgScore = total > 0 
-        ? Math.round(data.reduce((sum, r) => sum + (r.ats_score || 0), 0) / total)
+        ? Math.round(data.reduce((sum: number, r: any) => sum + (r.ats_score || 0), 0) / total)
         : 0;
       setStats({ total, avgScore });
     } catch (error) {
@@ -140,7 +148,7 @@ export default function Dashboard() {
                 No resumes yet. Click "New Resume" to create your first one!
               </div>
             ) : (
-              resumes.map((resume) => (
+              resumes.map((resume: Resume) => (
                 <div key={resume.id} className="px-6 py-4 flex justify-between items-center hover:bg-gray-50">
                   <div>
                     <h3 className="font-medium text-gray-900">{resume.title}</h3>
